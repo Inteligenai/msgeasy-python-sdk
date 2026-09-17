@@ -1,0 +1,59 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "msgeasy"
+dynamic = ["version"]
+description = "MsgEasy WhatsApp messaging and one-time passcodes"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Proprietary" }
+authors = [{ name = "MsgEasy" }]
+keywords = ["whatsapp", "otp", "verify", "messaging", "msgeasy"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Typing :: Typed",
+]
+
+# All imported by the generated core. urllib3 is capped because 3.x changes the
+# pool manager the transport reaches into.
+dependencies = [
+  "urllib3 >= 2.1.0, < 3.0.0",
+  "python-dateutil >= 2.8.2",
+  # 2.11 is the floor: the generated models configure `validate_by_name`.
+  "pydantic >= 2.11, < 3.0.0",
+  "typing-extensions >= 4.7.1",
+]
+
+[project.optional-dependencies]
+dev = ["mypy >= 1.11", "ruff >= 0.6"]
+
+[project.urls]
+Homepage = "https://msgeasy.com"
+
+# One source for the version, shared with `USER_AGENT`.
+[tool.hatch.version]
+path = "msgeasy/_version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["msgeasy"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+# Generated, and formatted by the generator rather than by us.
+extend-exclude = ["msgeasy/_generated"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "B", "SIM", "ARG", "RET", "C4", "I"]
+
+[tool.mypy]
+# The plugin is what teaches mypy that a model configured with `validate_by_name`
+# accepts its field names and not only its wire aliases.
+plugins = ["pydantic.mypy"]
+strict = true
+
+[[tool.mypy.overrides]]
+module = "msgeasy._generated.*"
+ignore_errors = true

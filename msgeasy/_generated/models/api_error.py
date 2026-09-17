@@ -1,0 +1,94 @@
+# coding: utf-8
+
+"""MsgEasy WhatsApp API"""  # noqa: E501
+
+
+from __future__ import annotations
+import pprint
+import re  # noqa: F401
+import json
+
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Literal, Optional, Union
+from typing_extensions import Annotated
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
+
+class ApiError(BaseModel):
+    """
+    ApiError
+    """ # noqa: E501
+    status_code: Annotated[int, Field(le=9007199254740991, strict=True, ge=-9007199254740991)] = Field(description="The HTTP status, repeated in the body.", alias="statusCode")
+    error: StrictStr = Field(description="The HTTP status name.", json_schema_extra={"examples": ["Conflict"]})
+    message: StrictStr = Field(description="A human-readable explanation. Read it; do not branch on it.", json_schema_extra={"examples": ["This number has not messaged you in the last 24 hours."]})
+    code: Union[Literal['invalid_api_key', 'insufficient_scope', 'rate_limited', 'quota_exceeded', 'key_limit_reached', 'spend_cap_reached', 'verify_not_configured', 'idempotency_conflict', 'service_unavailable', 'not_found', 'invalid_request', 'unsupported_media_type', 'media_too_large', 'whatsapp_not_connected', 'meta_error', 'window_expired', 'template_not_approved', 'no_sender', 'template_name_taken', 'template_not_editable', 'template_category_not_allowed', 'test_key_not_allowed'], StrictStr] = Field(description="The machine-readable reason. **Branch on this, not the status** — two different codes can share a status. Treat a code you do not recognise as a generic failure; the catalogue grows.", json_schema_extra={"examples": ["window_expired"]})
+    details: Optional[Any] = Field(default=None, description="Extra context for this specific code — `used`, `cap` and `resetsAt` on a quota refusal, for instance.")
+    __properties: ClassVar[List[str]] = ["statusCode", "error", "message", "code", "details"]
+
+
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
+
+    def to_str(self) -> str:
+        """Returns the string representation of the model using alias"""
+        return pprint.pformat(self.model_dump(by_alias=True))
+
+    def to_json(self) -> str:
+        """Returns the JSON representation of the model using alias"""
+        return json.dumps(to_jsonable_python(self.to_dict()))
+
+    @classmethod
+    def from_json(cls, json_str: str) -> Optional[Self]:
+        """Create an instance of ApiError from a JSON string"""
+        return cls.from_dict(json.loads(json_str))
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
+        # set to None if details (nullable) is None
+        # and model_fields_set contains the field
+        if self.details is None and "details" in self.model_fields_set:
+            _dict['details'] = None
+
+        return _dict
+
+    @classmethod
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
+        """Create an instance of ApiError from a dict"""
+        if obj is None:
+            return None
+
+        if not isinstance(obj, dict):
+            return cls.model_validate(obj)
+
+        _obj = cls.model_validate({
+            "statusCode": obj.get("statusCode"),
+            "error": obj.get("error"),
+            "message": obj.get("message"),
+            "code": obj.get("code"),
+            "details": obj.get("details")
+        })
+        return _obj
+
+
