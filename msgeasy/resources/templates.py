@@ -49,6 +49,7 @@ class TemplatesResource:
         self,
         *,
         status: Optional[str] = None,
+        category: Optional[str] = None,
         updated_after: Optional[Any] = None,
         limit: Optional[int] = None,
         starting_after: Optional[str] = None,
@@ -60,6 +61,7 @@ class TemplatesResource:
         """
         return self._page(
             status=status,
+            category=category,
             updated_after=updated_after,
             limit=limit,
             starting_after=starting_after,
@@ -70,6 +72,7 @@ class TemplatesResource:
         self,
         *,
         status: Optional[str] = None,
+        category: Optional[str] = None,
         updated_after: Optional[Any] = None,
         limit: Optional[int] = None,
         timeout: Optional[float] = None,
@@ -81,6 +84,7 @@ class TemplatesResource:
         return paginate(
             lambda cursor: self._page(
                 status=status,
+                category=category,
                 updated_after=updated_after,
                 limit=limit,
                 starting_after=cursor,
@@ -92,6 +96,7 @@ class TemplatesResource:
         self,
         *,
         status: Optional[str],
+        category: Optional[str],
         updated_after: Optional[Any],
         limit: Optional[int],
         starting_after: Optional[str],
@@ -102,6 +107,7 @@ class TemplatesResource:
             limit=limit,
             starting_after=starting_after,
             status=status,
+            category=category,
             updated_after=updated_after,
             idempotent=False,
             timeout=timeout,

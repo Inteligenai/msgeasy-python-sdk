@@ -10,7 +10,7 @@ errors handled for you.
 ## Install
 
 ```bash
-pip install "git+https://github.com/Inteligenai/msgeasy-python-sdk.git@v0.1.0"
+pip install "git+https://github.com/Inteligenai/msgeasy-python-sdk.git@v0.1.1"
 ```
 
 Pin to a released tag, not a branch — see [Inteligenai/msgeasy-python-sdk](https://github.com/Inteligenai/msgeasy-python-sdk) for the latest.
@@ -511,7 +511,7 @@ than 5 minutes is rejected; pass `tolerance_seconds` to widen that.
 
 Events: `message.sent`, `message.delivered`, `message.read`, `message.failed`, `inbound.received`,
 `verify.approved`, `verify.delivered`, `verify.failed`, `template.status_changed`,
-`usage.threshold`.
+`template.category_changing`, `template.category_changed`, `usage.threshold`.
 
 Register your endpoint in the console — there is no API for it.
 

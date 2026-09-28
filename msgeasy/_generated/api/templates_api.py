@@ -456,6 +456,7 @@ class TemplatesApi:
         limit: Annotated[Optional[Annotated[int, Field(le=100, strict=True, ge=1)]], Field(description="How many templates per page.")] = None,
         starting_after: Annotated[Optional[StrictStr], Field(description="The last `id` from the previous page. Results continue after it.")] = None,
         status: Annotated[Optional[StrictStr], Field(description="Return only templates in this state.")] = None,
+        category: Annotated[Optional[StrictStr], Field(description="Return only templates of this category. Both are returned by default.")] = None,
         updated_after: Annotated[Optional[Any], Field(description="Only templates changed since this instant, which is what makes polling cheap.")] = None,
         _request_timeout: Union[
             None,
@@ -476,6 +477,7 @@ class TemplatesApi:
             limit=limit,
             starting_after=starting_after,
             status=status,
+            category=category,
             updated_after=updated_after,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -508,6 +510,7 @@ class TemplatesApi:
         limit: Annotated[Optional[Annotated[int, Field(le=100, strict=True, ge=1)]], Field(description="How many templates per page.")] = None,
         starting_after: Annotated[Optional[StrictStr], Field(description="The last `id` from the previous page. Results continue after it.")] = None,
         status: Annotated[Optional[StrictStr], Field(description="Return only templates in this state.")] = None,
+        category: Annotated[Optional[StrictStr], Field(description="Return only templates of this category. Both are returned by default.")] = None,
         updated_after: Annotated[Optional[Any], Field(description="Only templates changed since this instant, which is what makes polling cheap.")] = None,
         _request_timeout: Union[
             None,
@@ -528,6 +531,7 @@ class TemplatesApi:
             limit=limit,
             starting_after=starting_after,
             status=status,
+            category=category,
             updated_after=updated_after,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -560,6 +564,7 @@ class TemplatesApi:
         limit: Annotated[Optional[Annotated[int, Field(le=100, strict=True, ge=1)]], Field(description="How many templates per page.")] = None,
         starting_after: Annotated[Optional[StrictStr], Field(description="The last `id` from the previous page. Results continue after it.")] = None,
         status: Annotated[Optional[StrictStr], Field(description="Return only templates in this state.")] = None,
+        category: Annotated[Optional[StrictStr], Field(description="Return only templates of this category. Both are returned by default.")] = None,
         updated_after: Annotated[Optional[Any], Field(description="Only templates changed since this instant, which is what makes polling cheap.")] = None,
         _request_timeout: Union[
             None,
@@ -580,6 +585,7 @@ class TemplatesApi:
             limit=limit,
             starting_after=starting_after,
             status=status,
+            category=category,
             updated_after=updated_after,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -607,6 +613,7 @@ class TemplatesApi:
         limit,
         starting_after,
         status,
+        category,
         updated_after,
         _request_auth,
         _content_type,
@@ -641,6 +648,10 @@ class TemplatesApi:
         if status is not None:
             
             _query_params.append(('status', status))
+            
+        if category is not None:
+            
+            _query_params.append(('category', category))
             
         if updated_after is not None:
             

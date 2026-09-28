@@ -24,7 +24,7 @@ class Template(BaseModel):
     id: StrictStr = Field(description="Pass this to `POST /v1/messages` as `templateId`.", json_schema_extra={"examples": ["tpl_3b9f1c2d4e5a6b7c8d9e0f1a2b3c4d5e"]})
     name: StrictStr = Field(description="The name this template holds at Meta.")
     status: Union[Literal['pending', 'processing', 'approved', 'rejected'], StrictStr] = Field(description="Only an `approved` template can be sent. `pending` and `processing` are waiting on Meta; `rejected` carries a `rejectionReason`.")
-    category: Union[Literal['MARKETING', 'UTILITY'], StrictStr] = Field(description="Meta re-categorises on approval, so this can differ from what was submitted.")
+    category: Union[Literal['MARKETING', 'UTILITY', 'AUTHENTICATION'], StrictStr] = Field(description="Meta re-categorises on approval, so this can differ from what was submitted. `AUTHENTICATION` templates are made in WhatsApp Business Manager and synced.")
     language: StrictStr = Field(description="Meta's language code.")
     body: StrictStr = Field(description="The message text, with `{{n}}` placeholders.")
     variables: List[TemplateVariable] = Field(description="One entry per placeholder in the body.")

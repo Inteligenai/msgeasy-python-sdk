@@ -22,7 +22,7 @@ class UpdateTemplateInput(BaseModel):
     UpdateTemplateInput
     """ # noqa: E501
     name: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Lowercase letters, digits and underscores. Claimed permanently at Meta — a deleted name stays reserved for about 30 days.", json_schema_extra={"examples": ["order_shipped"]})
-    category: Optional[StrictStr] = Field(default=None, description="Utility only. Marketing templates can be listed and sent, but not created here.")
+    category: Optional[StrictStr] = Field(default=None, description="Utility only. Marketing templates cannot be created, listed or sent through the API; authentication templates are made in WhatsApp Business Manager.")
     language: Optional[Annotated[str, Field(min_length=2, strict=True, max_length=10)]] = Field(default=None, description="Meta's language code, not ours.", json_schema_extra={"examples": ["en_US"]})
     body: Optional[Annotated[str, Field(min_length=1, strict=True, max_length=1024)]] = Field(default=None, description="The message text. Use `{{1}}`, `{{2}}` for placeholders.", json_schema_extra={"examples": ["Hi {{1}}, your order {{2}} has shipped."]})
     variables: Optional[List[TemplateVariableInput]] = Field(default=None, description="An example value per placeholder. Meta rejects a template whose examples are missing.")
